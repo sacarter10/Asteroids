@@ -10,7 +10,9 @@ window.Asteroids = (function(Lib) {
 		//ship constructor
 		function Ship(x, y, game) {
 			Asteroids.MovingObject.call(this, x, y, 0, 0, game);
-			this.radius = 47;
+			this.radius = 10;
+			this.direction = 0;
+			this.velocity = 0;
 		}
 
 		Ship.inherits(Asteroids.MovingObject);
@@ -20,13 +22,47 @@ window.Asteroids = (function(Lib) {
 
 			for (var i = 0; i < asteroids.length; i++) {
 				if (colliding(this, asteroids[i])) {
-					// console.log("you got hit");
-					this.xDelta = asteroids[i].xDelta;
-					this.yDelta = asteroids[i].yDelta;
-					asteroids[i].xDelta = 0;
-					asteroids[i].yDelta = 0;
+					return true;
 				}
 			}
+			return false;
+		}
+
+
+		Ship.prototype.update = function() {
+
+			//console.log("Direction is " + this.direction);
+			this.xDelta = this.velocity * Math.cos(this.direction);
+			this.yDelta = this.velocity * Math.sin(this.direction);
+
+			Asteroids.MovingObject.prototype.update.call(this);
+			if (this.offscreen()) {
+				if (this.x < 0) {
+				  this.x = this.game.width;
+				}
+				if (this.x > this.game.width) {
+				  this.x = 0;
+				}
+				if (this.y < 0) {
+				  this.y = this.game.height;
+				}
+				if (this.y > this.game.height) {
+				  this.y = 0;
+				}
+			}
+		}
+
+		Ship.prototype.fireBullet = function() {
+			var bulletXDelta = 3 * Math.cos(this.direction) + this.xDelta;
+			var bulletYDelta = 3 * Math.sin(this.direction) + this.yDelta;
+
+			var bullet = new Asteroids.Bullet(
+				this.x,
+				this.y,
+				bulletXDelta,
+				bulletYDelta,
+				this.game);
+			this.game.bullets.push(bullet);
 		}
 
 		function colliding(obj1, obj2) {
@@ -44,18 +80,54 @@ window.Asteroids = (function(Lib) {
 			var ctx = this.game.context;
 			//console.log("I stored a context!")
 
+
+			//Draw the collision detection circle
 			ctx.fillStyle = "red";
 			ctx.beginPath();
-			    ctx.arc(
-			      this.x,
-			      this.y,
-			      this.radius, //radius
-			      0, //something
-			      2 * Math.PI, //what
-			      false //FALSE
-			    );
+	    ctx.arc(
+	      this.x,
+	      this.y,
+	      this.radius, //radius
+	      0, //something
+	      2 * Math.PI, //what
+	      false //FALSE
+	    );
+			ctx.fill();
 
-			    ctx.fill();
+			//Pt Forward, Left, and Right of triangle
+			var PtF = [this.radius, 0];
+			var PtL = [0, this.radius];
+			var PtR = [0, -this.radius];
+
+			var Pts = [PtF, PtL, PtR];
+			for (var i = 0; i < 3; i++) {
+				var x = Pts[i][0];
+				var y =	Pts[i][1];
+
+				Pts[i][0] = x * Math.cos(this.direction)
+									- y * Math.sin(this.direction);
+
+				Pts[i][1] = x * Math.sin(this.direction)
+									+ y * Math.cos(this.direction);
+				//console.log("Pt is " + Pts[i][0] + "," + Pts[i][1]);
+			}
+			for (var i = 0; i < 3; i++) {
+				Pts[i][0] += this.x;
+				Pts[i][1] += this.y;
+			}
+			//console.log("------- ship is at" + this.x + "," + this.y);
+
+			//Draw the facing triangle
+			ctx.fillStyle = "red";
+			ctx.beginPath();
+			ctx.moveTo(PtF[0], PtF[1]);
+			ctx.lineTo(PtL[0], PtL[1]);
+			ctx.lineTo(PtR[0], PtR[1]);
+			ctx.closePath();
+			ctx.fill();
+			ctx.strokeStyle = 'rgb(0,128,0)';
+			ctx.lineWidth = 2;
+			ctx.stroke();
 		}
 
 		return Ship;

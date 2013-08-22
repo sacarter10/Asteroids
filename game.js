@@ -9,22 +9,67 @@ window.Asteroids = (function(Lib) {
 		function Game(width, height, canvasEl) {
 			this.width = width;
 			this.height = height;
+			this.gameOver = false;
 			this.context = canvasEl.getContext("2d");;
 			this.asteroids = this.makeRandomAsteroids(5);
-			this.ship = new Asteroids.Ship(this.width / 2, this.height / 2, this); //OTP
+			this.ship = new Asteroids.Ship(this.width / 2, this.height / 2, this);
+			this.bullets = [];
+
+			var thatShip = this.ship;
+			key('up', function() {
+				if (thatShip.velocity <= 8) thatShip.velocity += 1;
+			} );
+			key('down', function() {
+				if (thatShip.velocity > 0) thatShip.velocity -= 1;
+			} );
+			key('left', function() {
+				thatShip.direction -= Math.PI/16;
+				//if (thatShip.xDelta >= -8) thatShip.xDelta -= 1;
+			} );
+			key('right', function() {
+				thatShip.direction += Math.PI/16;
+				//if (thatShip.xDelta <= 8) thatShip.xDelta += 1;
+			} );
+			key ('space', function() {
+				thatShip.fireBullet();
+			} );
+		}
+
+		Game.prototype.destroyAsteroid = function (index) {
+			for (var j = index; j < this.asteroids.length - 1; j++) {
+				this.asteroids[j] = this.asteroids[j+1];
+			}
+			this.asteroids.pop();
 		}
 
 		Game.prototype.draw = function () {
 			this.context.clearRect(0, 0, this.width, this.height);
+			var ctx = this.context;
+
+			if (this.gameOver) {
+				ctx.fillStyle = "blue";
+				ctx.font = "italic " + 36 + "pt Arial ";
+				ctx.fillText("GAME OVER", 20, 150);
+				window.clearInterval(this.timerId);
+			}
 
 			this.ship.draw();
 
+			for (var i = 0; i < this.bullets.length; i++) {
+				if (this.bullets[i].offscreen()) {
+					for (var j = i; j < this.bullets.length - 1; j++) {
+						this.bullets[j] = this.bullets[j+1];
+					}
+					this.bullets.pop();
+					i--;
+				} else {
+					this.bullets[i].draw();
+				}
+			}
+
 			for (var i = 0; i < this.asteroids.length; i++) {
 				if (this.asteroids[i].offscreen()) {
-					for (var j = i; j < this.asteroids.length - 1; j++) {
-						this.asteroids[j] = this.asteroids[j+1];
-					}
-					this.asteroids.pop();
+					this.destroyAsteroid(i);
 					i--;
 				} else {
 					this.asteroids[i].draw();
@@ -48,10 +93,21 @@ window.Asteroids = (function(Lib) {
 		};
 
 		Game.prototype.update = function () {
-			this.ship.isHit();
+			if (this.ship.isHit()) {
+				this.gameOver = true;
+			};
+
 			this.ship.update();
 			for (var i = 0; i < this.asteroids.length; i++) {
 				this.asteroids[i].update();
+			}
+
+			for (var i = 0; i < this.bullets.length; i++) {
+				this.bullets[i].update();
+				var target = this.bullets[i].hitsAsteroid();
+				if (target !== -1) {
+					this.destroyAsteroid(target);
+				}
 			}
 
 			var numNewAsteroids = 5 - this.asteroids.length;
@@ -97,7 +153,7 @@ window.Asteroids = (function(Lib) {
 			var that = this;
 			that.draw();
 
-			window.setInterval(function() {
+			this.timerId = window.setInterval(function() {
 				//console.log("Triggered interval");
 				that.update();
 				that.draw();
