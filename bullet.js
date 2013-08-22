@@ -9,7 +9,7 @@ window.Asteroids = (function(Lib) {
 		//ship constructor
 		function Bullet(x, y, xVel, yVel, game) {
 			Asteroids.MovingObject.call(this, x, y, xVel, yVel, game);
-			this.radius = 2;
+			this.radius = 7;
 		}
 
 		Bullet.inherits(Asteroids.MovingObject);

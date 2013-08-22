@@ -10,7 +10,7 @@ window.Asteroids = (function(Lib) {
 		//ship constructor
 		function Ship(x, y, game) {
 			Asteroids.MovingObject.call(this, x, y, 0, 0, game);
-			this.radius = 10;
+			this.radius = 20;
 			this.direction = 0;
 			this.velocity = 0;
 		}
@@ -53,8 +53,8 @@ window.Asteroids = (function(Lib) {
 		}
 
 		Ship.prototype.fireBullet = function() {
-			var bulletXDelta = 3 * Math.cos(this.direction) + this.xDelta;
-			var bulletYDelta = 3 * Math.sin(this.direction) + this.yDelta;
+			var bulletXDelta = 10 * Math.cos(this.direction) + this.xDelta;
+			var bulletYDelta = 10 * Math.sin(this.direction) + this.yDelta;
 
 			var bullet = new Asteroids.Bullet(
 				this.x,

@@ -14,7 +14,7 @@ window.Asteroids = (function(Lib) {
 		function MovingObject(x, y, xDelta, yDelta, game) {
 			this.x = x;
 			this.y = y;
-			this.radius = 15;
+			this.radius = 35;
 			this.xDelta = xDelta;
 			this.yDelta = yDelta;
 			this.game = game;

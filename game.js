@@ -14,6 +14,7 @@ window.Asteroids = (function(Lib) {
 			this.asteroids = this.makeRandomAsteroids(5);
 			this.ship = new Asteroids.Ship(this.width / 2, this.height / 2, this);
 			this.bullets = [];
+			this.score = 0;
 
 			var thatShip = this.ship;
 			key('up', function() {
@@ -42,14 +43,31 @@ window.Asteroids = (function(Lib) {
 			this.asteroids.pop();
 		}
 
+		Game.prototype.destroyBullet = function (index) {
+			for (var i = index; i < this.bullets.length - 1; i++) {
+				this.bullets[i] = this.bullets[i+1];
+			}
+			this.bullets.pop();
+		}
+
 		Game.prototype.draw = function () {
 			this.context.clearRect(0, 0, this.width, this.height);
 			var ctx = this.context;
+
+			ctx.fillStyle = "blue";
+			ctx.font = 16 + "pt Comic Sans ";
+			ctx.fillText("Score: " + this.score, this.width - 100, 100);
+
 
 			if (this.gameOver) {
 				ctx.fillStyle = "blue";
 				ctx.font = "italic " + 36 + "pt Arial ";
 				ctx.fillText("GAME OVER", 20, 150);
+				window.clearInterval(this.timerId);
+			} else if (this.score >= 1000) {
+				ctx.fillStyle = "blue";
+				ctx.font = "italic " + 36 + "pt Arial ";
+				ctx.fillText("YOU WON!", 20, 150);
 				window.clearInterval(this.timerId);
 			}
 
@@ -106,7 +124,10 @@ window.Asteroids = (function(Lib) {
 				this.bullets[i].update();
 				var target = this.bullets[i].hitsAsteroid();
 				if (target !== -1) {
+					this.score += 50;
 					this.destroyAsteroid(target);
+					this.destroyBullet(i);
+					i--;
 				}
 			}
 
