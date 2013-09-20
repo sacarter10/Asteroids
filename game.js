@@ -25,11 +25,9 @@ window.Asteroids = (function(Lib) {
 			} );
 			key('left', function() {
 				thatShip.direction -= Math.PI/16;
-				//if (thatShip.xDelta >= -8) thatShip.xDelta -= 1;
 			} );
 			key('right', function() {
 				thatShip.direction += Math.PI/16;
-				//if (thatShip.xDelta <= 8) thatShip.xDelta += 1;
 			} );
 			key ('space', function() {
 				thatShip.fireBullet();
@@ -175,7 +173,6 @@ window.Asteroids = (function(Lib) {
 			that.draw();
 
 			this.timerId = window.setInterval(function() {
-				//console.log("Triggered interval");
 				that.update();
 				that.draw();
 			}, 1000/32);

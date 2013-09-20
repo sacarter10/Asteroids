@@ -4,7 +4,6 @@ window.Asteroids = (function(Lib) {
 		return Math.random()*(high - low) + low;
 	}
 
-	//to minimize Ryan's bitching
 	Lib.Ship = (function() {
 
 		//ship constructor
@@ -31,7 +30,6 @@ window.Asteroids = (function(Lib) {
 
 		Ship.prototype.update = function() {
 
-			//console.log("Direction is " + this.direction);
 			this.xDelta = this.velocity * Math.cos(this.direction);
 			this.yDelta = this.velocity * Math.sin(this.direction);
 
@@ -66,7 +64,6 @@ window.Asteroids = (function(Lib) {
 		}
 
 		function colliding(obj1, obj2) {
-			// console.log("called colliding");
 			var dist = Math.pow((obj1.x - obj2.x), 2);
 			dist += Math.pow((obj1.y - obj2.y), 2);
 			dist = Math.sqrt(dist);
@@ -76,10 +73,7 @@ window.Asteroids = (function(Lib) {
 
 		Ship.prototype.draw = function() {
 
-			//console.log("I'm trying to draw!")
 			var ctx = this.game.context;
-			//console.log("I stored a context!")
-
 
 			//Draw the collision detection circle
 			ctx.fillStyle = "red";
@@ -87,10 +81,10 @@ window.Asteroids = (function(Lib) {
 	    ctx.arc(
 	      this.x,
 	      this.y,
-	      this.radius, //radius
-	      0, //something
-	      2 * Math.PI, //what
-	      false //FALSE
+	      this.radius, 
+	      0, 
+	      2 * Math.PI, 
+	      false 
 	    );
 			ctx.fill();
 
@@ -109,14 +103,12 @@ window.Asteroids = (function(Lib) {
 
 				Pts[i][1] = x * Math.sin(this.direction)
 									+ y * Math.cos(this.direction);
-				//console.log("Pt is " + Pts[i][0] + "," + Pts[i][1]);
 			}
 			for (var i = 0; i < 3; i++) {
 				Pts[i][0] += this.x;
 				Pts[i][1] += this.y;
 			}
-			//console.log("------- ship is at" + this.x + "," + this.y);
-
+		
 			//Draw the facing triangle
 			ctx.fillStyle = "red";
 			ctx.beginPath();
