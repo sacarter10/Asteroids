@@ -48,9 +48,7 @@ window.Asteroids = (function(Lib) {
 		Asteroid.inherits(Lib.MovingObject);
 
 		Asteroid.prototype.draw = function () {
-			//console.log("I'm trying to draw!")
 			var ctx = this.game.context;
-			//console.log("I stored a context!")
 
 			ctx.fillStyle = "black";
 			ctx.beginPath();
