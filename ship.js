@@ -110,14 +110,14 @@ window.Asteroids = (function(Lib) {
 			}
 		
 			//Draw the facing triangle
-			ctx.fillStyle = "black"; 
+			ctx.fillStyle = "white"; 
 			ctx.beginPath();
 			ctx.moveTo(PtF[0], PtF[1]);
 			ctx.lineTo(PtL[0], PtL[1]);
 			ctx.lineTo(PtR[0], PtR[1]);
 			ctx.closePath();
 			ctx.fill();
-			ctx.strokeStyle = 'black';
+			ctx.strokeStyle = 'white';
 			ctx.lineWidth = 2;
 			ctx.stroke();
 		}

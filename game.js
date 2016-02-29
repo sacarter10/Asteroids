@@ -58,14 +58,15 @@ window.Asteroids = (function(Lib) {
 
 
 			if (this.gameOver) {
-				// ctx.fillStyle = "lightblue"; //blue
-				// ctx.font = "bold " + 36 + "pt Arial ";
-				// ctx.fillText("GAME OVER", 20, 150);
-				// window.clearInterval(this.timerId);
-			} else if (this.score >= 100) {
-				// ctx.fillStyle = "lightblue"; //blue
-				// ctx.font = "bold " + 36 + "pt Arial ";
-				// ctx.fillText("YOU WON!", 20, 150);
+				ctx.fillStyle = "lightblue"; //blue
+				ctx.font = "bold " + 36 + "pt Arial ";
+				ctx.fillText("GAME OVER", 20, 150);
+				debugger;
+				window.clearInterval(this.timerId);
+			} else if (this.score >= 1000) {
+				ctx.fillStyle = "lightblue"; //blue
+				ctx.font = "bold " + 36 + "pt Arial ";
+				ctx.fillText("YOU WON!", 20, 150);
 				window.clearInterval(this.timerId);
 			}
 
@@ -168,9 +169,13 @@ window.Asteroids = (function(Lib) {
 			}
 		}
 
-		Game.prototype.start = function () {
+		Game.prototype.setup = function () {
 			var that = this;
 			that.draw();
+		};
+
+		Game.prototype.start = function () {
+			var that = this;
 
 			this.timerId = window.setInterval(function() {
 				that.update();
