@@ -1,7 +1,11 @@
 $(function () {
-  var canvas = $("<canvas width='" + 100% +
-                 "' height='" + 100% + "'></canvas>");
-  $('body').append(canvas);
+  var canvas = $('canvas')[0];
 
-  new Asteroids.Game(1000, 800, canvas).start();
+  var windowHeight = $(window).height();
+  var windowWidth = $(window).width();
+
+  canvas.height = windowHeight;
+  canvas.width = windowWidth;
+
+  new Asteroids.Game(windowWidth, windowHeight, canvas).start();
 });

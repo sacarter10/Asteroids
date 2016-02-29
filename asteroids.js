@@ -48,20 +48,18 @@ window.Asteroids = (function(Lib) {
 		Asteroid.inherits(Lib.MovingObject);
 
 		Asteroid.prototype.draw = function () {
-			//console.log("I'm trying to draw!")
 			var ctx = this.game.context;
-			//console.log("I stored a context!")
 
-			ctx.fillStyle = "black";
+			ctx.fillStyle = "#FFDB58"; //yellow
 			ctx.beginPath();
 
 	    ctx.arc(
 	      this.x,
 	      this.y,
-	      this.radius, //radius
-	      0, //something
-	      2 * Math.PI, //what
-	      false //FALSE
+	      this.radius, 
+	      0, 
+	      2 * Math.PI,
+	      false 
 	    );
 
 	    ctx.fill();
