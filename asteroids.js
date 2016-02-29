@@ -50,16 +50,16 @@ window.Asteroids = (function(Lib) {
 		Asteroid.prototype.draw = function () {
 			var ctx = this.game.context;
 
-			ctx.fillStyle = "black";
+			ctx.fillStyle = "#FFDB58"; //yellow
 			ctx.beginPath();
 
 	    ctx.arc(
 	      this.x,
 	      this.y,
-	      this.radius, //radius
-	      0, //something
-	      2 * Math.PI, //what
-	      false //FALSE
+	      this.radius, 
+	      0, 
+	      2 * Math.PI,
+	      false 
 	    );
 
 	    ctx.fill();

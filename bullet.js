@@ -37,15 +37,15 @@ window.Asteroids = (function(Lib) {
 		Bullet.prototype.draw = function() {
 			var ctx = this.game.context;
 
-			ctx.fillStyle = "red";
+			ctx.fillStyle = "white"; 
 			ctx.beginPath();
 			ctx.arc(
 			  this.x,
 			  this.y,
-			  this.radius, //radius
-			  0, //something
-			  2 * Math.PI, //what
-			  false //FALSE
+			  this.radius, 
+			  0, 
+			  2 * Math.PI, 
+			  false 
 			);
 
 			ctx.fill();
