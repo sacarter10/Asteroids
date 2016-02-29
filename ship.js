@@ -76,7 +76,7 @@ window.Asteroids = (function(Lib) {
 			var ctx = this.game.context;
 
 			//Draw the collision detection circle
-			ctx.fillStyle = "#b20000"; //red
+			ctx.fillStyle = "#e50000"; //red
 			ctx.beginPath();
 	    ctx.arc(
 	      this.x,
@@ -110,7 +110,7 @@ window.Asteroids = (function(Lib) {
 			}
 		
 			//Draw the facing triangle
-			ctx.fillStyle = "black"; //red
+			ctx.fillStyle = "black"; 
 			ctx.beginPath();
 			ctx.moveTo(PtF[0], PtF[1]);
 			ctx.lineTo(PtL[0], PtL[1]);

@@ -52,20 +52,20 @@ window.Asteroids = (function(Lib) {
 			this.context.clearRect(0, 0, this.width, this.height);
 			var ctx = this.context;
 
-			ctx.fillStyle = "#000080";
+			ctx.fillStyle = "lightblue";
 			ctx.font = 16 + "pt Arial ";
 			ctx.fillText("Score: " + this.score, this.width - 200, 50);
 
 
 			if (this.gameOver) {
-				ctx.fillStyle = "#000080";
-				ctx.font = "italic " + 36 + "pt Arial ";
-				ctx.fillText("GAME OVER", 20, 150);
-				window.clearInterval(this.timerId);
-			} else if (this.score >= 1000) {
-				ctx.fillStyle = "#000080";
-				ctx.font = "italic " + 36 + "pt Arial ";
-				ctx.fillText("YOU WON!", 20, 150);
+				// ctx.fillStyle = "lightblue"; //blue
+				// ctx.font = "bold " + 36 + "pt Arial ";
+				// ctx.fillText("GAME OVER", 20, 150);
+				// window.clearInterval(this.timerId);
+			} else if (this.score >= 100) {
+				// ctx.fillStyle = "lightblue"; //blue
+				// ctx.font = "bold " + 36 + "pt Arial ";
+				// ctx.fillText("YOU WON!", 20, 150);
 				window.clearInterval(this.timerId);
 			}
 
